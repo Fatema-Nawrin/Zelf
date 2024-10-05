@@ -8,7 +8,7 @@ const fileData = require('./data.json');
 
 async function scrapePosts() {
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
   });
   const page = await browser.newPage();
   await page.goto('https://www.tiktok.com/explore', { waitUntil: 'networkidle2', timeout: 60000 });
@@ -39,6 +39,24 @@ async function scrapePosts() {
     await page.click('div#tabs-0-tab-search_video');
     await page.waitForSelector('xpath///*[@id="tabs-0-panel-search_video"]/div/div/div');
     await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    // (pagination)
+    let prevHeight = -1;
+    let maxScrolls = 5;
+    let scrollCount = 0;
+
+    while (scrollCount < maxScrolls) {
+      await page.evaluate('window.scrollTo(0, document.body.scrollHeight)');
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      let newHeight = await page.evaluate('document.body.scrollHeight');
+      if (newHeight == prevHeight) {
+        break;
+      }
+      prevHeight = newHeight;
+      scrollCount += 1;
+    }
+    console.log(scrollCount);
 
     let allVideos = await page.$$('xpath///*[@id="tabs-0-panel-search_video"]/div/div/div');
 

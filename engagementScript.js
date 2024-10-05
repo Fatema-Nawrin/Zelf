@@ -13,9 +13,8 @@ async function likePost(url) {
   await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
   await page.waitForSelector('xpath///*[@id="main-content-video_detail"]/div/div[2]/div[1]/div[1]/div[1]/div[4]/div[2]/button[1]');
   await page.click('xpath///*[@id="main-content-video_detail"]/div/div[2]/div[1]/div[1]/div[1]/div[4]/div[2]/button[1]/span/div/div/svg');
-  //   await page.click('span[data-e2e="browse-like-icon"]');
-  //   *[@id="main-content-video_detail"]/div/div[2]/div[1]/div[1]/div[1]/div[4]/div[2]/button[1]
-  await new Promise((resolve) => setTimeout(resolve, 30000));
+
+  //   await new Promise((resolve) => setTimeout(resolve, 30000));
 
   await browser.close();
 }
@@ -33,4 +32,4 @@ async function login(page) {
   await new Promise((resolve) => setTimeout(resolve, 30000));
 }
 
-likePost('https://www.tiktok.com/@mddyelrck/video/7236784024314744070?q=%23wanderlust&t=1728111974633');
+// likePost('https://www.tiktok.com/@mddyelrck/video/7236784024314744070?q=%23wanderlust&t=1728111974633');
